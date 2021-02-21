@@ -23,9 +23,21 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
+    App\Project\Controller\ProjectController:
         tags: ['controller.service_arguments']
+
+    App\Shared\Slug\IntlTransliteratorSlugGenerator: ~
+
+    App\Shared\Slug\SlugGeneratorInterface: '@App\Shared\Slug\IntlTransliteratorSlugGenerator'
+
+    App\Project\Slug\ProjectSlugGenerator:
+        decorates: App\Shared\Slug\SlugGeneratorInterface
+        arguments:
+            - '@App\Project\Slug\ProjectSlugGenerator.inner'
+
+    # App\Project\Controller\:
+    #     resource: '../src/Project/Controller'
+    #     tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
