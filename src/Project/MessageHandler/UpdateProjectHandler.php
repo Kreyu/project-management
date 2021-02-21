@@ -12,12 +12,12 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class UpdateProjectHandler implements MessageHandlerInterface
 {
-    private ProjectRepositoryInterface $repository;
+    private ProjectRepositoryInterface $projectRepository;
     private ProjectSlugGenerator $slugGenerator;
 
-    public function __construct(ProjectRepositoryInterface $repository, ProjectSlugGenerator $slugGenerator)
+    public function __construct(ProjectRepositoryInterface $projectRepository, ProjectSlugGenerator $slugGenerator)
     {
-        $this->repository = $repository;
+        $this->projectRepository = $projectRepository;
         $this->slugGenerator = $slugGenerator;
     }
 
@@ -28,12 +28,12 @@ class UpdateProjectHandler implements MessageHandlerInterface
      */
     public function __invoke(UpdateProject $command): void
     {
-        $project = $this->repository->get($command->getProjectId());
+        $project = $this->projectRepository->get($command->getProjectId());
 
         $project->setName($command->getName());
         $project->setDescription($command->getDescription());
         $project->setSlug($this->slugGenerator->generate($command->getName()));
 
-        $this->repository->update($project);
+        $this->projectRepository->update($project);
     }
 }

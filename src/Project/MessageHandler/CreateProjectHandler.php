@@ -12,12 +12,12 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class CreateProjectHandler implements MessageHandlerInterface
 {
-    private ProjectRepositoryInterface $repository;
+    private ProjectRepositoryInterface $projectRepository;
     private ProjectSlugGenerator $slugGenerator;
 
-    public function __construct(ProjectRepositoryInterface $repository, ProjectSlugGenerator $slugGenerator)
+    public function __construct(ProjectRepositoryInterface $projectRepository, ProjectSlugGenerator $slugGenerator)
     {
-        $this->repository = $repository;
+        $this->projectRepository = $projectRepository;
         $this->slugGenerator = $slugGenerator;
     }
 
@@ -31,6 +31,6 @@ class CreateProjectHandler implements MessageHandlerInterface
             slug: $slug,
         );
 
-        $this->repository->add($project);
+        $this->projectRepository->add($project);
     }
 }

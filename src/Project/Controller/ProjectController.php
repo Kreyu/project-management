@@ -17,13 +17,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * TODO:
+ *   - move routing into separate configuration file
+ *   - refactor into single-responsibility action classes (maybe?)
+ */
 class ProjectController extends AbstractController
 {
     private ProjectRepositoryInterface $projectRepository;
     private IssueRepositoryInterface $issueRepository;
 
-    public function __construct(ProjectRepositoryInterface $projectRepository, IssueRepositoryInterface $issueRepository)
-    {
+    public function __construct(
+        ProjectRepositoryInterface $projectRepository,
+        IssueRepositoryInterface $issueRepository
+    ) {
         $this->projectRepository = $projectRepository;
         $this->issueRepository = $issueRepository;
     }
@@ -47,6 +54,7 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
+            // TODO: create static "fromProjectData" method (maybe?)
             $this->dispatchMessage(new CreateProject(
                 name: $data->name,
                 description: $data->description,
@@ -92,6 +100,7 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
+            // TODO: create static "fromProjectData" method (maybe?)
             $this->dispatchMessage(new UpdateProject(
                 projectId: $project->getId(),
                 name: $data->name,
