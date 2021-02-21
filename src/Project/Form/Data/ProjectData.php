@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Project\Form\Data;
 
-use App\Project\Entity\Project;
+use App\Project\Model\Project;
 
 class ProjectData
 {

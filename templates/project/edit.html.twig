@@ -1,4 +1,39 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit" value="Update"/>
-{{ form_end(form) }}
+{% extends '_layout/base.html.twig' %}
+
+{% block content %}
+    <div class="my-3 my-md-5">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">
+                    {{ project.name }}
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ form_start(form, { 'attr': { 'class': 'card' } }) }}
+                        <div class="card-header">
+                            <h3 class="card-title">Edit basic information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        {{ form_label(form.name, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                                        {{ form_widget(form.name, { 'attr': { 'class': 'form-control' } }) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_label(form.description, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                                        {{ form_widget(form.description, { attr: { 'class': 'form-control' } }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer px-0 pb-0">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

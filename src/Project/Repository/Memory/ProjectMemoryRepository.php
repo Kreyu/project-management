@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Project\Repository\Memory;
 
-use App\Project\Entity\Project;
+use App\Project\Model\Project;
 use App\Project\Repository\ProjectRepositoryInterface;
 use App\Shared\Exception\ModelNotFoundException;
 use Symfony\Component\Uid\Uuid;

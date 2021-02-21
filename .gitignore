@@ -8,4 +8,5 @@
 /var/
 /vendor/
 /.idea
+/public/tabler-gh-pages
 ###< symfony/framework-bundle ###

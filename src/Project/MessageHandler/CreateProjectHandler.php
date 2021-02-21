@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Project\MessageHandler;
 
-use App\Project\Entity\Project;
+use App\Project\Model\Project;
 use App\Project\Message\CreateProject;
 use App\Project\Repository\ProjectRepositoryInterface;
 use App\Project\Slug\ProjectSlugGenerator;

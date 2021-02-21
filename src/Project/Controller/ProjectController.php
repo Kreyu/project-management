@@ -4,31 +4,34 @@ declare(strict_types=1);
 
 namespace App\Project\Controller;
 
+use App\Issue\Repository\IssueRepositoryInterface;
 use App\Project\Form\Data\ProjectData;
 use App\Project\Form\Type\ProjectType;
 use App\Project\Message\CreateProject;
 use App\Project\Message\UpdateProject;
 use App\Project\Repository\ProjectRepositoryInterface;
+use App\Shared\Controller\AbstractController;
 use App\Shared\Exception\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Uid\Uuid;
 
-class ProjectController extends \App\Shared\Controller\AbstractController
+class ProjectController extends AbstractController
 {
-    private ProjectRepositoryInterface $repository;
+    private ProjectRepositoryInterface $projectRepository;
+    private IssueRepositoryInterface $issueRepository;
 
-    public function __construct(ProjectRepositoryInterface $repository)
+    public function __construct(ProjectRepositoryInterface $projectRepository, IssueRepositoryInterface $issueRepository)
     {
-        $this->repository = $repository;
+        $this->projectRepository = $projectRepository;
+        $this->issueRepository = $issueRepository;
     }
 
     #[Route('/projects', name: 'projects.index', methods: ['GET'])]
     public function index(): Response
     {
-        $projects = $this->repository->all();
+        $projects = $this->projectRepository->all();
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
@@ -57,11 +60,28 @@ class ProjectController extends \App\Shared\Controller\AbstractController
         ]);
     }
 
+    #[Route('/projects/{slug}', name: 'projects.show', methods: ['GET'])]
+    public function show(Request $request): Response
+    {
+        try {
+            $project = $this->projectRepository->getBySlug($request->attributes->get('slug'));
+        } catch (ModelNotFoundException) {
+            throw new NotFoundHttpException();
+        }
+
+        $issues = $this->issueRepository->getByProjectId($project->getId());
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+            'issues' => $issues,
+        ]);
+    }
+
     #[Route('/projects/{slug}/edit', name: 'projects.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request): Response
     {
         try {
-            $project = $this->repository->getBySlug($request->attributes->get('slug'));
+            $project = $this->projectRepository->getBySlug($request->attributes->get('slug'));
         } catch (ModelNotFoundException) {
             throw new NotFoundHttpException();
         }
@@ -83,6 +103,7 @@ class ProjectController extends \App\Shared\Controller\AbstractController
 
         return $this->render('project/edit.html.twig', [
             'form' => $form->createView(),
+            'project' => $project,
         ]);
     }
 }

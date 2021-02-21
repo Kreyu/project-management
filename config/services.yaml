@@ -21,10 +21,11 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Project\Controller\ProjectController:
+    App\Shared\Controller\AbstractController:
         tags: ['controller.service_arguments']
+
+    App\Project\Controller\ProjectController:
+        parent: App\Shared\Controller\AbstractController
 
     App\Shared\Slug\IntlTransliteratorSlugGenerator: ~
 
@@ -34,10 +35,3 @@ services:
         decorates: App\Shared\Slug\SlugGeneratorInterface
         arguments:
             - '@App\Project\Slug\ProjectSlugGenerator.inner'
-
-    # App\Project\Controller\:
-    #     resource: '../src/Project/Controller'
-    #     tags: ['controller.service_arguments']
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Project\Entity;
+namespace App\Project\Model;
 
 use Symfony\Component\Uid\Uuid;
 
