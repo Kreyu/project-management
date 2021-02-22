@@ -24,10 +24,10 @@
                                     <tr>
                                         <td>{{ project.name }}</td>
                                         <td class="w-1">
-                                            <a href="{{ path('projects.show', { slug: project.slug }) }}" class="icon"><i class="fe fe-info"></i></a>
+                                            <a href="{{ path('projects_show', { slug: project.slug }) }}" class="icon"><i class="fe fe-info"></i></a>
                                         </td>
                                         <td class="w-1">
-                                            <a href="{{ path('projects.edit', { slug: project.slug }) }}" class="icon"><i class="fe fe-edit"></i></a>
+                                            <a href="{{ path('projects_edit', { slug: project.slug }) }}" class="icon"><i class="fe fe-edit"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

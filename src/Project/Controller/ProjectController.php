@@ -15,12 +15,9 @@ use App\Shared\Exception\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * TODO:
- *   - move routing into separate configuration file
- *   - refactor into single-responsibility action classes (maybe?)
+ * TODO: refactor into multiple single action controllers (maybe?)
  */
 class ProjectController extends AbstractController
 {
@@ -35,17 +32,15 @@ class ProjectController extends AbstractController
         $this->issueRepository = $issueRepository;
     }
 
-    #[Route('/projects', name: 'projects.index', methods: ['GET'])]
     public function index(): Response
     {
-        $projects = $this->projectRepository->all();
+        // TODO: Project paginator
 
         return $this->render('project/index.html.twig', [
-            'projects' => $projects,
+            'projects' => [],
         ]);
     }
 
-    #[Route('/projects/create', name: 'projects.create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $form = $this->createForm(ProjectType::class);
@@ -54,13 +49,9 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            // TODO: create static "fromProjectData" method (maybe?)
-            $this->dispatchMessage(new CreateProject(
-                name: $data->name,
-                description: $data->description,
-            ));
+            $this->dispatchMessage(CreateProject::createFromProjectData($data));
 
-            return $this->redirectToRoute('projects.index');
+            return $this->redirectToRoute('projects_index');
         }
 
         return $this->render('project/create.html.twig', [
@@ -68,7 +59,6 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/projects/{slug}', name: 'projects.show', methods: ['GET'])]
     public function show(Request $request): Response
     {
         try {
@@ -85,7 +75,6 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/projects/{slug}/edit', name: 'projects.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request): Response
     {
         try {
@@ -100,14 +89,11 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            // TODO: create static "fromProjectData" method (maybe?)
-            $this->dispatchMessage(new UpdateProject(
-                projectId: $project->getId(),
-                name: $data->name,
-                description: $data->description,
-            ));
+            $this->dispatchMessage(
+                UpdateProject::createFromProjectData($data, $project->getId())
+            );
 
-            return $this->redirectToRoute('projects.index');
+            return $this->redirectToRoute('projects_index');
         }
 
         return $this->render('project/edit.html.twig', [

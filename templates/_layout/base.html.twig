@@ -46,7 +46,7 @@
         <div class="header py-4">
             <div class="container">
                 <div class="d-flex">
-                    <a class="header-brand" href="{{ path('projects.index') }}">
+                    <a class="header-brand" href="{{ path('projects_index') }}">
                         Project management
                     </a>
                     <div class="d-flex order-lg-2 ml-auto">
@@ -82,7 +82,7 @@
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                <a href="{{ path('projects.index') }}" class="nav-link {{ app.request.get('_route') in ['projects.index', 'projects.show', 'projects.create', 'projects.edit'] ? 'active' }}" data-toggle="dropdown"
+                                <a href="{{ path('projects_index') }}" class="nav-link {{ app.request.get('_route') in ['projects_index', 'projects_show', 'projects_create', 'projects_edit'] ? 'active' }}" data-toggle="dropdown"
                                    aria-expanded="false"><i class="fe fe-box"></i> Projects</a>
                             </li>
                         </ul>

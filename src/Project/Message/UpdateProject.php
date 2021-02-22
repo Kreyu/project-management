@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Project\Message;
 
+use App\Project\Form\Data\ProjectData;
 use Symfony\Component\Uid\Uuid;
 
 class UpdateProject
@@ -17,6 +18,15 @@ class UpdateProject
         $this->projectId = $projectId;
         $this->name = $name;
         $this->description = $description;
+    }
+
+    public static function createFromProjectData(ProjectData $data, Uuid $projectId): self
+    {
+        return new self(
+            projectId: $projectId,
+            name: $data->name,
+            description: $data->description,
+        );
     }
 
     public function getProjectId(): Uuid

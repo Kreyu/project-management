@@ -28,16 +28,14 @@ interface ProjectRepositoryInterface
      */
     public function getBySlug(string $slug): Project;
 
-    public function all(): array;
-
     public function add(Project $project): void;
 
     /**
-     * @param  Uuid $id
+     * @param  Project $project
      *
      * @throws ModelNotFoundException
      */
-    public function remove(Uuid $id): void;
+    public function remove(Project $project): void;
 
     public function update(Project $project): void;
 }

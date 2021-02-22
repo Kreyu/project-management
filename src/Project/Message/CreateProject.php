@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Project\Message;
 
+use App\Project\Form\Data\ProjectData;
+
 class CreateProject
 {
     private string $name;
@@ -13,6 +15,14 @@ class CreateProject
     {
         $this->name = $name;
         $this->description = $description;
+    }
+
+    public static function createFromProjectData(ProjectData $data): self
+    {
+        return new self(
+            name: $data->name,
+            description: $data->description,
+        );
     }
 
     public function getName(): string

@@ -1,0 +1,25 @@
+projects_index:
+  path: /projects
+  controller: App\Project\Controller\ProjectController::index
+  methods:
+    - GET
+
+projects_create:
+  path: /projects/create
+  controller: App\Project\Controller\ProjectController::create
+  methods:
+    - GET
+    - POST
+
+projects_show:
+  path: /projects/{slug}
+  controller: App\Project\Controller\ProjectController::show
+  methods:
+    - GET
+
+projects_edit:
+  path: /projects/{slug}/edit
+  controller: App\Project\Controller\ProjectController::edit
+  methods:
+    - GET
+    - POST
