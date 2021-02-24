@@ -6,6 +6,7 @@ namespace App\Project\Repository;
 
 use App\Project\Model\Project;
 use App\Shared\Exception\ModelNotFoundException;
+use App\Shared\Pagination\PaginatorInterface;
 use Symfony\Component\Uid\Uuid;
 
 interface ProjectRepositoryInterface
@@ -38,4 +39,6 @@ interface ProjectRepositoryInterface
     public function remove(Project $project): void;
 
     public function update(Project $project): void;
+
+    public function paginate(int $page, int $perPage): PaginatorInterface;
 }

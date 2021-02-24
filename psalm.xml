@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
-<psalm>
+<psalm
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
     <projectFiles>
         <directory name="src" />
     </projectFiles>
     <issueHandlers>
-        <RedundantPropertyInitializationCheck>
-            <errorLevel type="suppress">
-                <directory name="src/Shared/Controller" />
-            </errorLevel>
-        </RedundantPropertyInitializationCheck>
+        <RedundantPropertyInitializationCheck errorLevel="suppress"/>
+        <PropertyNotSetInConstructor errorLevel="suppress"/>
     </issueHandlers>
 </psalm>

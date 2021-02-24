@@ -23,6 +23,7 @@ services:
         arguments:
             - '@App\Project\Slug\ProjectSlugGenerator.inner'
 
+
     # App\Shared
 
     App\Shared\Controller\AbstractController:

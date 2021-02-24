@@ -1,3 +1,7 @@
 controllers:
   resource: ../src/
   type: annotation
+
+project:
+  resource: ../src/Project/Resources/routes/
+  type: directory

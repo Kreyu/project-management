@@ -32,12 +32,19 @@ class ProjectController extends AbstractController
         $this->issueRepository = $issueRepository;
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        // TODO: Project paginator
+        $page = $request->query->getInt('page', 1);
+        $perPage = $request->query->getInt('per_page', 25);
+
+        if ($perPage < 1 || $perPage > 50) {
+            $perPage = 25;
+        }
+
+        $paginator = $this->projectRepository->paginate($page, $perPage);
 
         return $this->render('project/index.html.twig', [
-            'projects' => [],
+            'paginator' => $paginator,
         ]);
     }
 

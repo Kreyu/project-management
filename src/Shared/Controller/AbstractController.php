@@ -46,8 +46,6 @@ abstract class AbstractController
 
     protected function render(string $template, array $context = []): Response
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck - TODO: move into psalm.xml */
-
         if (!isset($this->viewRenderer)) {
             throw new \LogicException('You have to provide view renderer using the setter injection.');
         }
@@ -57,8 +55,6 @@ abstract class AbstractController
 
     protected function generateUrl(string $routeName, array $parameters = []): string
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck - TODO: move into psalm.xml */
-
         if (!isset($this->urlGenerator)) {
             throw new \LogicException('You have to provide url generator using the setter injection.');
         }
@@ -68,8 +64,6 @@ abstract class AbstractController
 
     protected function createForm(string $type, mixed $data = null, array $options = []): FormInterface
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck - TODO: move into psalm.xml */
-
         if (!isset($this->formFactory)) {
             throw new \LogicException('You have to provide form factory using the setter injection.');
         }
@@ -79,8 +73,6 @@ abstract class AbstractController
 
     protected function dispatchMessage(object $message, array $stamps = []): void
     {
-        /** @psalm-suppress RedundantPropertyInitializationCheck - TODO: move into psalm.xml */
-
         if (!isset($this->messageBus)) {
             throw new \LogicException('You have to provide message bus using the setter injection.');
         }
