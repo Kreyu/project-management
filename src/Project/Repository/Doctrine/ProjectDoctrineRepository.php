@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Project\Repository\Doctrine;
 
+use App\Project\Collection\ProjectCollection;
 use App\Project\Model\Project;
 use App\Project\Repository\ProjectRepositoryInterface;
 use App\Shared\Exception\ModelNotFoundException;
-use App\Shared\Pagination\DoctrinePaginator;
-use App\Shared\Pagination\PaginatorInterface;
 use App\Shared\Repository\AbstractDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Uid\Uuid;
@@ -21,22 +20,22 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
     }
 
     /**
-     * @param  Uuid $id
+     * @param  Uuid $projectId
      *
      * @return Project
      * @throws ModelNotFoundException
      * @throws NonUniqueResultException
      */
-    public function get(Uuid $id): Project
+    public function get(Uuid $projectId): Project
     {
         $project = $this->repository->createQueryBuilder('project')
             ->where('project.id = :id')
-            ->setParameter('id', $id->toBinary())
+            ->setParameter('id', $projectId->toBinary())
             ->getQuery()
             ->getOneOrNullResult();
 
         if (null === $project) {
-            throw new ModelNotFoundException();
+            throw new ModelNotFoundException(Project::class);
         }
 
         return $project;
@@ -58,10 +57,19 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
             ->getOneOrNullResult();
 
         if (null === $project) {
-            throw new ModelNotFoundException();
+            throw new ModelNotFoundException(Project::class);
         }
 
         return $project;
+    }
+
+    public function all(): ProjectCollection
+    {
+        $projects = $this->repository->createQueryBuilder('project')
+            ->getQuery()
+            ->getResult();
+
+        return new ProjectCollection($projects);
     }
 
     public function add(Project $project): void
@@ -70,27 +78,8 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
         $this->entityManager->flush();
     }
 
-    public function remove(Project $project): void
-    {
-        $this->entityManager->remove($project);
-        $this->entityManager->flush();
-    }
-
     public function update(Project $project): void
     {
         $this->entityManager->flush();
-    }
-
-    /**
-     * @param  int $page
-     * @param  int $perPage
-     *
-     * @return PaginatorInterface
-     */
-    public function paginate(int $page, int $perPage): PaginatorInterface
-    {
-        $queryBuilder = $this->repository->createQueryBuilder('project');
-
-        return new DoctrinePaginator($queryBuilder, $page, $perPage);
     }
 }

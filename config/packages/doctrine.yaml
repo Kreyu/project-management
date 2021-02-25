@@ -6,9 +6,21 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
+            Issue:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Issue/Resources/mapping/orm'
+                prefix: 'App\Issue\Model'
+                alias: Issue
             Project:
                 is_bundle: false
                 type: xml
                 dir: '%kernel.project_dir%/src/Project/Resources/mapping/orm'
                 prefix: 'App\Project\Model'
                 alias: Project
+            Task:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Task/Resources/mapping/orm'
+                prefix: 'App\Task\Model'
+                alias: Task

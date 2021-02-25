@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Pagination;
+namespace App\Shared\Pagination\Doctrine;
 
-use ArrayIterator;
+use App\Shared\Pagination\PaginatorInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Traversable;
 
-class DoctrinePaginator implements PaginatorInterface
+abstract class AbstractDoctrinePaginator implements PaginatorInterface
 {
-    private Paginator $paginator;
+    protected Paginator $paginator;
 
-    private int $page;
-    private int $perPage;
+    protected int $page;
+    protected int $perPage;
 
     public function __construct(QueryBuilder $queryBuilder, int $page, int $perPage)
     {
@@ -25,11 +24,6 @@ class DoctrinePaginator implements PaginatorInterface
 
         $this->page = $page;
         $this->perPage = $perPage;
-    }
-
-    public function getIterator(): Traversable|ArrayIterator
-    {
-        return $this->paginator->getIterator();
     }
 
     public function getPage(): int
