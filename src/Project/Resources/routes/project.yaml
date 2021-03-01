@@ -11,15 +11,21 @@ projects_create:
     - GET
     - POST
 
-projects_show:
-  path: /projects/{slug}
-  controller: App\Project\Controller\ProjectController::show
-  methods:
-    - GET
-
 projects_edit:
   path: /projects/{slug}/edit
   controller: App\Project\Controller\ProjectController::edit
   methods:
     - GET
     - POST
+
+project_overview:
+  path: /projects/{slug}/overview
+  controller: App\Project\Controller\ProjectController::overview
+  methods:
+    - GET
+
+project_issues:
+  path: /projects/{slug}/issues
+  controller: App\Project\Controller\ProjectController::issues
+  methods:
+    - GET

@@ -7,5 +7,9 @@
         <many-to-one field="project" target-entity="App\Project\Model\Project"/>
         <field name="subject"/>
         <field name="description" type="text"/>
+        <many-to-one field="priority" target-entity="App\Issue\Model\IssuePriority"/>
+        <many-to-one field="status" target-entity="App\Issue\Model\IssueStatus"/>
+        <field name="createdAt" type="datetime"/>
+        <field name="updatedAt" type="datetime"/>
     </entity>
 </doctrine-mapping>

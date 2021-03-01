@@ -1,13 +1,51 @@
 {% extends '_layout/base.html.twig' %}
 
 {% block content %}
-    {{ form_start(form) }}
-        {{ form_label(form.subject) }}
-        {{ form_widget(form.subject, { 'attr': { 'class': 'form-control' } }) }}
+    <div class="container-xl">
+        <div class="page-header d-print-none">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">
+                        Projects
+                    </div>
+                    <h2 class="page-title">
+                        Create new project
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cards">
+            <div class="col-12">
+                {{ form_start(form, { 'attr': { 'class': 'card' } }) }}
+                    <div class="card-header">
+                        <h4 class="card-title">Basic information</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="row">
+                                    <div class="col-md-6 col-xl-12">
+                                        <div class="mb-3">
+                                            {{ form_label(form.name, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                                            {{ form_widget(form.name, { 'attr': { 'class': 'form-control' } }) }}
+                                        </div>
 
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description, { attr: { 'class': 'form-control' } }) }}
-
-    <input class="btn btn-primary" type="submit" value="Create"/>
-    {{ form_end(form) }}
+                                        <div class="mb-3">
+                                            {{ form_label(form.description, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                                            {{ form_widget(form.description, { 'attr': { 'class': 'form-control' } }) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <div class="d-flex">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

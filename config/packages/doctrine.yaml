@@ -18,9 +18,3 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Project/Resources/mapping/orm'
                 prefix: 'App\Project\Model'
                 alias: Project
-            Task:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/src/Task/Resources/mapping/orm'
-                prefix: 'App\Task\Model'
-                alias: Task

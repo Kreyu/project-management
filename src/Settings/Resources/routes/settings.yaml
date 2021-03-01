@@ -1,0 +1,11 @@
+settings_issue_priorities:
+  path: /settings/issues/priorities
+  controller: App\Settings\Controller\SettingsController::issuePriorities
+  methods:
+    - GET
+
+settings_issue_statuses:
+  path: /settings/issues/statuses
+  controller: App\Settings\Controller\SettingsController::issueStatuses
+  methods:
+    - GET

@@ -1,0 +1,22 @@
+<div class="d-none d-lg-block col-lg-3">
+    <div class="col mb-3">
+        <div class="page-pretitle">
+            Settings
+        </div>
+        <h2 class="page-title">
+            Issues
+        </h2>
+    </div>
+    <ul class="nav nav-pills nav-vertical">
+        <li class="nav-item">
+            <a href="{{ path('settings_issue_priorities') }}" class="nav-link {% if app.request.get('_route') == 'settings_issue_priorities' %}active{% endif %}">
+                Priorities
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('settings_issue_statuses') }}" class="nav-link {% if app.request.get('_route') == 'settings_issue_statuses' %}active{% endif %}">
+                Statuses
+            </a>
+        </li>
+    </ul>
+</div>

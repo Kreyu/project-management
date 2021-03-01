@@ -23,6 +23,15 @@ services:
         arguments:
             - '@App\Project\Slug\ProjectSlugGenerator.inner'
 
+    # App\Issue
+
+    App\Issue\Controller\IssueController:
+        parent: App\Shared\Controller\AbstractController
+
+    # App\Settings
+
+    App\Settings\Controller\SettingsController:
+        parent: App\Shared\Controller\AbstractController
 
     # App\Shared
 

@@ -12,12 +12,21 @@ class CreateIssue
     private Uuid $projectId;
     private string $subject;
     private string $description;
+    private Uuid $priorityId;
+    private Uuid $statusId;
 
-    public function __construct(Uuid $projectId, string $subject, string $description)
-    {
+    public function __construct(
+        Uuid $projectId,
+        string $subject,
+        string $description,
+        Uuid $priorityId,
+        Uuid $statusId
+    ) {
         $this->projectId = $projectId;
         $this->subject = $subject;
         $this->description = $description;
+        $this->priorityId = $priorityId;
+        $this->statusId = $statusId;
     }
 
     public static function createFromIssueData(IssueData $data): self
@@ -42,5 +51,25 @@ class CreateIssue
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getPriorityId(): Uuid
+    {
+        return $this->priorityId;
+    }
+
+    public function setPriorityId(Uuid $priorityId): void
+    {
+        $this->priorityId = $priorityId;
+    }
+
+    public function getStatusId(): Uuid
+    {
+        return $this->statusId;
+    }
+
+    public function setStatusId(Uuid $statusId): void
+    {
+        $this->statusId = $statusId;
     }
 }

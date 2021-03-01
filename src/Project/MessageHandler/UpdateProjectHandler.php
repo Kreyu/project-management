@@ -30,9 +30,11 @@ class UpdateProjectHandler implements MessageHandlerInterface
     {
         $project = $this->projectRepository->get($command->getProjectId());
 
-        $project->setName($command->getName());
-        $project->setDescription($command->getDescription());
-        $project->setSlug($this->slugGenerator->generate($command->getName()));
+        $project->update(
+            name: $command->getName(),
+            description: $command->getDescription(),
+            slug: $this->slugGenerator->generate($command->getName()),
+        );
 
         $this->projectRepository->update($project);
     }

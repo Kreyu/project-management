@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 class IssueDoctrineRepository extends AbstractDoctrineRepository implements IssueRepositoryInterface
 {
-    public static function getEntityClass(): string
+    protected function getEntityClass(): string
     {
         return Issue::class;
     }
@@ -28,7 +28,7 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
      */
     public function get(Uuid $issueId): Issue
     {
-        $project = $this->repository->createQueryBuilder('issue')
+        $project = $this->createQueryBuilder('issue')
             ->where('issue.id = :id')
             ->setParameter('id', $issueId->toBinary())
             ->getQuery()
@@ -43,7 +43,7 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
 
     public function getByProjectId(Uuid $projectId): IssueCollection
     {
-        $issues = $this->repository->createQueryBuilder('issue')
+        $issues = $this->createQueryBuilder('issue')
             ->where('issue.project = :project')
             ->setParameter('project', $projectId->toBinary())
             ->getQuery()
@@ -54,7 +54,7 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
 
     public function all(): IssueCollection
     {
-        $issues = $this->repository->createQueryBuilder('issue')
+        $issues = $this->createQueryBuilder('issue')
             ->getQuery()
             ->getResult();
 

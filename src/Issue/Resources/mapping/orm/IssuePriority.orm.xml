@@ -1,0 +1,12 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Issue\Model\IssuePriority" table="issue_priority">
+        <id name="id" type="uuid" column="id"/>
+        <field name="name"/>
+        <field name="description"/>
+        <field name="icon"/>
+        <field name="position" type="integer" unique="true"/>
+    </entity>
+</doctrine-mapping>

@@ -16,7 +16,7 @@ class ProjectSlugGenerator implements SlugGeneratorInterface
     public function __construct(SlugGeneratorInterface $slugGenerator, ProjectRepositoryInterface $repository)
     {
         $this->slugGenerator = $slugGenerator;
-        $this->repository = $repository;
+        $this->entityRepository = $repository;
     }
 
     public function generate(string $subject, ?int $suffix = null): string
@@ -24,7 +24,7 @@ class ProjectSlugGenerator implements SlugGeneratorInterface
         $slug = $this->slugGenerator->generate($subject, $suffix);
 
         try {
-            $this->repository->getBySlug($slug);
+            $this->entityRepository->getBySlug($slug);
         } catch (ModelNotFoundException) {
             return $slug;
         }

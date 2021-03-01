@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Project\Model;
 
+use App\Shared\Model\TimestampableTrait;
+use DateTime;
 use Symfony\Component\Uid\Uuid;
 
 class Project
 {
+    use TimestampableTrait;
+
     private Uuid $id;
     private string $name;
     private string $description;
@@ -19,6 +23,17 @@ class Project
         $this->name = $name;
         $this->description = $description;
         $this->slug = $slug;
+
+        $this->initTimestamps();
+    }
+
+    public function update(string $name, string $description, string $slug): void
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->slug = $slug;
+
+        $this->updatedAt = new DateTime;
     }
 
     public function getId(): Uuid
@@ -31,28 +46,13 @@ class Project
         return $this->name;
     }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
     public function getSlug(): string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
     }
 }

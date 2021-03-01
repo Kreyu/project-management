@@ -1,0 +1,5 @@
+issues_show:
+  path: /issues/{id}
+  controller: App\Issue\Controller\IssueController::show
+  methods:
+    - GET

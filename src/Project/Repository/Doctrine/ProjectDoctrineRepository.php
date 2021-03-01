@@ -14,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
 
 class ProjectDoctrineRepository extends AbstractDoctrineRepository implements ProjectRepositoryInterface
 {
-    public static function getEntityClass(): string
+    protected function getEntityClass(): string
     {
         return Project::class;
     }
@@ -28,7 +28,7 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
      */
     public function get(Uuid $projectId): Project
     {
-        $project = $this->repository->createQueryBuilder('project')
+        $project = $this->createQueryBuilder('project')
             ->where('project.id = :id')
             ->setParameter('id', $projectId->toBinary())
             ->getQuery()
@@ -50,7 +50,7 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
      */
     public function getBySlug(string $slug): Project
     {
-        $project = $this->repository->createQueryBuilder('project')
+        $project = $this->createQueryBuilder('project')
             ->where('project.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
@@ -65,7 +65,7 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
 
     public function all(): ProjectCollection
     {
-        $projects = $this->repository->createQueryBuilder('project')
+        $projects = $this->createQueryBuilder('project')
             ->getQuery()
             ->getResult();
 

@@ -5,24 +5,27 @@ declare(strict_types=1);
 namespace App\Shared\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 abstract class AbstractDoctrineRepository
 {
     protected EntityManagerInterface $entityManager;
-    protected EntityRepository $repository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = new EntityRepository(
-            $entityManager,
-            $entityManager->getClassMetadata(static::getEntityClass())
-        );
     }
 
     /**
      * @return class-string
      */
-    abstract public static function getEntityClass(): string;
+    abstract protected function getEntityClass(): string;
+
+    protected function createQueryBuilder(string $alias): QueryBuilder
+    {
+        return $this->entityManager
+            ->createQueryBuilder()
+            ->select($alias)
+            ->from($this->getEntityClass(), $alias);
+    }
 }

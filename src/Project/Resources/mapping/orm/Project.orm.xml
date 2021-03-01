@@ -7,5 +7,7 @@
         <field name="name"/>
         <field name="description" type="text"/>
         <field name="slug" unique="true"/>
+        <field name="createdAt" type="datetime"/>
+        <field name="updatedAt" type="datetime"/>
     </entity>
 </doctrine-mapping>

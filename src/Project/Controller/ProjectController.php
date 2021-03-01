@@ -41,6 +41,35 @@ class ProjectController extends AbstractController
         ]);
     }
 
+    public function overview(Request $request): Response
+    {
+        try {
+            $project = $this->projectRepository->getBySlug($request->attributes->get('slug'));
+        } catch (ModelNotFoundException) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('project/overview.html.twig', [
+            'project' => $project,
+        ]);
+    }
+
+    public function issues(Request $request): Response
+    {
+        try {
+            $project = $this->projectRepository->getBySlug($request->attributes->get('slug'));
+        } catch (ModelNotFoundException) {
+            throw new NotFoundHttpException();
+        }
+
+        $issues = $this->issueRepository->getByProjectId($project->getId());
+
+        return $this->render('project/issues.html.twig', [
+            'project' => $project,
+            'issues' => $issues,
+        ]);
+    }
+
     public function create(Request $request): Response
     {
         $form = $this->createForm(ProjectType::class);
@@ -56,22 +85,6 @@ class ProjectController extends AbstractController
 
         return $this->render('project/create.html.twig', [
             'form' => $form->createView(),
-        ]);
-    }
-
-    public function show(Request $request): Response
-    {
-        try {
-            $project = $this->projectRepository->getBySlug($request->attributes->get('slug'));
-        } catch (ModelNotFoundException) {
-            throw new NotFoundHttpException();
-        }
-
-        $issues = $this->issueRepository->getByProjectId($project->getId());
-
-        return $this->render('project/show.html.twig', [
-            'project' => $project,
-            'issues' => $issues,
         ]);
     }
 

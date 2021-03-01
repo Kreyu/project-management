@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Issue\Fixture;
 
 use App\Issue\Message\CreateIssue;
+use App\Issue\Repository\IssuePriorityRepositoryInterface;
+use App\Issue\Repository\IssueStatusRepositoryInterface;
 use App\Project\Fixture\ProjectFixture;
 use App\Project\Repository\ProjectRepositoryInterface;
+use App\Shared\Fixture\AbstractFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -14,30 +17,46 @@ use Exception;
 use LogicException;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class IssueFixture extends Fixture implements DependentFixtureInterface
+class IssueFixture extends AbstractFixture implements DependentFixtureInterface
 {
     private MessageBusInterface $messageBus;
     private ProjectRepositoryInterface $projectRepository;
+    private IssuePriorityRepositoryInterface $issuePriorityRepository;
+    private IssueStatusRepositoryInterface $issueStatusRepository;
 
-    public function __construct(MessageBusInterface $messageBus, ProjectRepositoryInterface $projectRepository)
-    {
+    public function __construct(
+        MessageBusInterface $messageBus,
+        ProjectRepositoryInterface $projectRepository,
+        IssuePriorityRepositoryInterface $issuePriorityRepository,
+        IssueStatusRepositoryInterface $issueStatusRepository,
+    ) {
+        parent::__construct();
+
         $this->messageBus = $messageBus;
         $this->projectRepository = $projectRepository;
+        $this->issuePriorityRepository = $issuePriorityRepository;
+        $this->issueStatusRepository = $issueStatusRepository;
     }
 
     public function load(ObjectManager $manager): void
     {
         $projects = $this->projectRepository->all();
+        $priorities = $this->issuePriorityRepository->all();
+        $statuses = $this->issueStatusRepository->all();
 
         foreach ($projects as $project) {
-            for ($i = 1; $i <= 10; $i++) {
-                $message = new CreateIssue(
-                    projectId: $project->getId(),
-                    subject: 'Issue ' . $i,
-                    description: 'Issue description',
-                );
+            foreach ($priorities as $priority) {
+                foreach ($statuses as $status) {
+                    $message = new CreateIssue(
+                        projectId: $project->getId(),
+                        subject: 'Issue subject',
+                        description: $this->faker->realText(1500),
+                        priorityId: $priority->getId(),
+                        statusId: $status->getId()
+                    );
 
-                $this->messageBus->dispatch($message);
+                    $this->messageBus->dispatch($message);
+                }
             }
         }
     }
@@ -46,6 +65,8 @@ class IssueFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             ProjectFixture::class,
+            IssuePriorityFixture::class,
+            IssueStatusFixture::class,
         ];
     }
 }

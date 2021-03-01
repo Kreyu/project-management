@@ -1,0 +1,41 @@
+{% extends '_layout/settings.html.twig' %}
+
+{% block content %}
+    <div class="row gx-lg-4">
+        {% include '_partials/settings_sidebar.html.twig' %}
+
+        <div class="col-lg-9">
+            <div class="card card-lg">
+                <div class="card-body">
+                    <div class="markdown">
+                        <div>
+                            <div class="d-flex mb-3">
+                                <h1 class="m-0">Issue statuses</h1>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempor neque eros, gravida malesuada ante accumsan nec. Cras eget suscipit nisl. Proin dapibus iaculis finibus. Phasellus vulputate, tellus ac sollicitudin viverra, orci mauris sagittis dui, non volutpat ante nisl id nisi. Aliquam erat volutpat. Nullam sem sapien, tempor quis aliquet vitae, dapibus at tellus. Donec tortor nisl, tristique id euismod at, vehicula et tortor. Nulla cursus volutpat neque sit amet placerat.</p>
+                        <div class="mt-4">
+                            <div class="row">
+                                <div class="list-group list-group-flush list-group-hoverable">
+                                    {% for status in statuses %}
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <span class="badge" style="margin: 0 8px; background-color: {{ '#' ~ status.colorHex }}"></span>
+                                                </div>
+                                                <div class="col text-truncate">
+                                                    <a href="#" class="text-body d-block">{{ status.name }}</a>
+                                                    <small class="d-block text-muted text-truncate mt-n1">{{ status.description }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

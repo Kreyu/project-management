@@ -5,3 +5,11 @@ controllers:
 project:
   resource: ../src/Project/Resources/routes/
   type: directory
+
+issue:
+  resource: ../src/Issue/Resources/routes/
+  type: directory
+
+settings:
+  resource: ../src/Settings/Resources/routes/
+  type: directory
