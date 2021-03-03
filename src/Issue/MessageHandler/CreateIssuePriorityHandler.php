@@ -26,10 +26,6 @@ class CreateIssuePriorityHandler implements MessageHandlerInterface
             icon: $command->getIcon(),
         );
 
-        $position = $this->issuePriorityRepository->getLatestPosition();
-
-        $issuePriority->setPosition($position + 1);
-
         $this->issuePriorityRepository->add($issuePriority);
     }
 }

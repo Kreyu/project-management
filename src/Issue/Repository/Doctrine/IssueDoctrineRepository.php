@@ -10,7 +10,6 @@ use App\Issue\Repository\IssueRepositoryInterface;
 use App\Shared\Exception\ModelNotFoundException;
 use App\Shared\Repository\AbstractDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Component\Uid\Uuid;
 
 class IssueDoctrineRepository extends AbstractDoctrineRepository implements IssueRepositoryInterface
 {
@@ -20,17 +19,17 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
     }
 
     /**
-     * @param  Uuid $issueId
+     * @param  int $issueId
      *
      * @return Issue
      * @throws ModelNotFoundException
      * @throws NonUniqueResultException
      */
-    public function get(Uuid $issueId): Issue
+    public function get(int $issueId): Issue
     {
         $project = $this->createQueryBuilder('issue')
             ->where('issue.id = :id')
-            ->setParameter('id', $issueId->toBinary())
+            ->setParameter('id', $issueId)
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -41,11 +40,11 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
         return $project;
     }
 
-    public function getByProjectId(Uuid $projectId): IssueCollection
+    public function getByProjectId(int $projectId): IssueCollection
     {
         $issues = $this->createQueryBuilder('issue')
             ->where('issue.project = :project')
-            ->setParameter('project', $projectId->toBinary())
+            ->setParameter('project', $projectId)
             ->getQuery()
             ->getResult();
 
@@ -59,11 +58,5 @@ class IssueDoctrineRepository extends AbstractDoctrineRepository implements Issu
             ->getResult();
 
         return new IssueCollection($issues);
-    }
-
-    public function add(Issue $issue): void
-    {
-        $this->entityManager->persist($issue);
-        $this->entityManager->flush();
     }
 }

@@ -14,13 +14,15 @@ use Symfony\Component\Uid\Uuid;
 interface IssueStatusRepositoryInterface
 {
     /**
-     * @param  Uuid $issueStatusId
+     * @param  int $issueStatusId
      *
      * @return IssueStatus
      *
      * @throws ModelNotFoundException
      */
-    public function get(Uuid $issueStatusId): IssueStatus;
+    public function get(int $issueStatusId): IssueStatus;
 
     public function all(): IssueStatusCollection;
+
+    public function add(IssueStatus $issueStatus): void;
 }

@@ -7,18 +7,17 @@ namespace App\Project\Repository;
 use App\Project\Collection\ProjectCollection;
 use App\Project\Model\Project;
 use App\Shared\Exception\ModelNotFoundException;
-use Symfony\Component\Uid\Uuid;
 
 interface ProjectRepositoryInterface
 {
     /**
-     * @param  Uuid $projectId
+     * @param  int $projectId
      *
      * @return Project
      *
      * @throws ModelNotFoundException
      */
-    public function get(Uuid $projectId): Project;
+    public function get(int $projectId): Project;
 
     /**
      * @param  string $slug

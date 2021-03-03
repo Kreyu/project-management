@@ -1,15 +1,22 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="App\Issue\Model\Issue" table="issue">
-        <id name="id" type="uuid" column="id"/>
+        <id name="id" type="integer" column="id">
+            <generator/>
+        </id>
         <many-to-one field="project" target-entity="App\Project\Model\Project"/>
-        <field name="subject"/>
-        <field name="description" type="text"/>
         <many-to-one field="priority" target-entity="App\Issue\Model\IssuePriority"/>
         <many-to-one field="status" target-entity="App\Issue\Model\IssueStatus"/>
-        <field name="createdAt" type="datetime"/>
-        <field name="updatedAt" type="datetime"/>
+        <field name="subject"/>
+        <field name="description" type="text"/>
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" type="datetime">
+            <gedmo:timestampable on="update"/>
+        </field>
     </entity>
 </doctrine-mapping>

@@ -6,7 +6,7 @@ namespace App\Shared\Model;
 
 trait SortableTrait
 {
-    private int $position = 0;
+    private int $position;
 
     public function getPosition(): int
     {

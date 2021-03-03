@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Issue\Fixture;
 
-use App\Issue\Model\IssueStatus;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Issue\Message\CreateIssueStatus;
+use App\Shared\Fixture\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
-class IssueStatusFixture extends Fixture
+class IssueStatusFixture extends AbstractFixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -19,11 +19,13 @@ class IssueStatusFixture extends Fixture
         ];
 
         foreach ($statuses as $name => $colorHex) {
-            $manager->persist(new IssueStatus(
+            $message = new CreateIssueStatus(
                 name: $name,
                 description: 'Issue status description',
                 colorHex: $colorHex,
-            ));
+            );
+
+            $this->dispatchMessage($message);
         }
 
         $manager->flush();

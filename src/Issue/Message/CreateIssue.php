@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace App\Issue\Message;
 
 use App\Issue\Form\Data\IssueData;
-use Symfony\Component\Uid\Uuid;
 
 class CreateIssue
 {
-    private Uuid $projectId;
+    private int $projectId;
     private string $subject;
     private string $description;
-    private Uuid $priorityId;
-    private Uuid $statusId;
+    private int $priorityId;
+    private int $statusId;
 
     public function __construct(
-        Uuid $projectId,
+        int $projectId,
         string $subject,
         string $description,
-        Uuid $priorityId,
-        Uuid $statusId
+        int $priorityId,
+        int $statusId
     ) {
         $this->projectId = $projectId;
         $this->subject = $subject;
@@ -35,10 +34,12 @@ class CreateIssue
             projectId: $data->project->getId(),
             subject: $data->subject,
             description: $data->description,
+            priorityId: $data->priority->getId(),
+            statusId: $data->status->getId(),
         );
     }
 
-    public function getProjectId(): Uuid
+    public function getProjectId(): int
     {
         return $this->projectId;
     }
@@ -53,23 +54,13 @@ class CreateIssue
         return $this->description;
     }
 
-    public function getPriorityId(): Uuid
+    public function getPriorityId(): int
     {
         return $this->priorityId;
     }
 
-    public function setPriorityId(Uuid $priorityId): void
-    {
-        $this->priorityId = $priorityId;
-    }
-
-    public function getStatusId(): Uuid
+    public function getStatusId(): int
     {
         return $this->statusId;
-    }
-
-    public function setStatusId(Uuid $statusId): void
-    {
-        $this->statusId = $statusId;
     }
 }

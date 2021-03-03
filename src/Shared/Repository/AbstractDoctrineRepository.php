@@ -6,6 +6,7 @@ namespace App\Shared\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Webmozart\Assert\Assert;
 
 abstract class AbstractDoctrineRepository
 {
@@ -27,5 +28,20 @@ abstract class AbstractDoctrineRepository
             ->createQueryBuilder()
             ->select($alias)
             ->from($this->getEntityClass(), $alias);
+    }
+
+    public function add(object $entity): void
+    {
+        Assert::isInstanceOf($entity, $this->getEntityClass());
+
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
+    public function update(object $entity): void
+    {
+        Assert::isInstanceOf($entity, $this->getEntityClass());
+
+        $this->entityManager->flush();
     }
 }

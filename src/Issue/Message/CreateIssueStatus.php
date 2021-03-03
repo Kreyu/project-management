@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Issue\Model;
+namespace App\Issue\Message;
 
-class IssueStatus
+class CreateIssueStatus
 {
-    private int $id;
     private string $name;
     private string $description;
     private string $colorHex;
@@ -16,11 +15,6 @@ class IssueStatus
         $this->name = $name;
         $this->description = $description;
         $this->colorHex = $colorHex;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getName(): string

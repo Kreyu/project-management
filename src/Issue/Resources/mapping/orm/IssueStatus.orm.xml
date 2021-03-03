@@ -3,7 +3,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="App\Issue\Model\IssueStatus" table="issue_status">
-        <id name="id" type="uuid" column="id"/>
+        <id name="id" type="integer" column="id">
+            <generator/>
+        </id>
         <field name="name"/>
         <field name="description"/>
         <field name="colorHex" length="6"/>

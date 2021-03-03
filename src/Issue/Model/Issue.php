@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace App\Issue\Model;
 
-use App\Issue\Collection\IssuePriorityCollection;
 use App\Project\Model\Project;
 use App\Shared\Model\TimestampableTrait;
-use DateTime;
-use Symfony\Component\Uid\Uuid;
 
 class Issue
 {
     use TimestampableTrait;
 
-    private Uuid $id;
+    private int $id;
     private Project $project;
     private string $subject;
     private string $description;
@@ -28,31 +25,14 @@ class Issue
         IssuePriority $priority,
         IssueStatus $status,
     ) {
-        $this->id = Uuid::v4();
         $this->project = $project;
         $this->subject = $subject;
         $this->description = $description;
         $this->priority = $priority;
         $this->status = $status;
-
-        $this->initTimestamps();
     }
 
-    public function update(
-        string $subject,
-        string $description,
-        IssuePriority $priority,
-        IssueStatus $status,
-    ): void {
-        $this->subject = $subject;
-        $this->description = $description;
-        $this->priority = $priority;
-        $this->status = $status;
-
-        $this->updatedAt = new DateTime;
-    }
-
-    public function getId(): Uuid
+    public function getId(): int
     {
         return $this->id;
     }
@@ -67,9 +47,19 @@ class Issue
         return $this->subject;
     }
 
+    public function setSubject(string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     public function getPriority(): IssuePriority
@@ -77,8 +67,18 @@ class Issue
         return $this->priority;
     }
 
+    public function setPriority(IssuePriority $priority): void
+    {
+        $this->priority = $priority;
+    }
+
     public function getStatus(): IssueStatus
     {
         return $this->status;
+    }
+
+    public function setStatus(IssueStatus $status): void
+    {
+        $this->status = $status;
     }
 }

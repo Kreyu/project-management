@@ -49,7 +49,7 @@ class IssueController extends AbstractController
     public function show(Request $request): Response
     {
         try {
-            $issue = $this->issueRepository->get(Uuid::fromString($request->attributes->get('id')));
+            $issue = $this->issueRepository->get($request->attributes->getInt('id'));
         } catch (ModelNotFoundException) {
             throw new NotFoundHttpException();
         }
@@ -57,15 +57,5 @@ class IssueController extends AbstractController
         return $this->render('issue/show.html.twig', [
             'issue' => $issue,
         ]);
-    }
-
-    public function create()
-    {
-        
-    }
-
-    public function edit()
-    {
-        
     }
 }

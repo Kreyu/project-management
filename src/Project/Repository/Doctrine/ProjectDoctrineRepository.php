@@ -10,7 +10,6 @@ use App\Project\Repository\ProjectRepositoryInterface;
 use App\Shared\Exception\ModelNotFoundException;
 use App\Shared\Repository\AbstractDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Component\Uid\Uuid;
 
 class ProjectDoctrineRepository extends AbstractDoctrineRepository implements ProjectRepositoryInterface
 {
@@ -20,17 +19,17 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
     }
 
     /**
-     * @param  Uuid $projectId
+     * @param  int $projectId
      *
      * @return Project
      * @throws ModelNotFoundException
      * @throws NonUniqueResultException
      */
-    public function get(Uuid $projectId): Project
+    public function get(int $projectId): Project
     {
         $project = $this->createQueryBuilder('project')
             ->where('project.id = :id')
-            ->setParameter('id', $projectId->toBinary())
+            ->setParameter('id', $projectId)
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -70,16 +69,5 @@ class ProjectDoctrineRepository extends AbstractDoctrineRepository implements Pr
             ->getResult();
 
         return new ProjectCollection($projects);
-    }
-
-    public function add(Project $project): void
-    {
-        $this->entityManager->persist($project);
-        $this->entityManager->flush();
-    }
-
-    public function update(Project $project): void
-    {
-        $this->entityManager->flush();
     }
 }

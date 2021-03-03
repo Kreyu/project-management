@@ -12,15 +12,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class ProjectFixture extends AbstractFixture
 {
-    private MessageBusInterface $messageBus;
-
-    public function __construct(MessageBusInterface $messageBus)
-    {
-        parent::__construct();
-
-        $this->messageBus = $messageBus;
-    }
-
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 10; $i++) {
@@ -29,7 +20,7 @@ class ProjectFixture extends AbstractFixture
                 description: $this->faker->realText(1500),
             );
 
-            $this->messageBus->dispatch($message);
+            $this->dispatchMessage($message);
         }
     }
 }

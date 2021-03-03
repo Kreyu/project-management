@@ -12,31 +12,18 @@ class Project
 {
     use TimestampableTrait;
 
-    private Uuid $id;
+    private int $id;
     private string $name;
     private string $description;
     private string $slug;
 
-    public function __construct(string $name, string $description, string $slug)
-    {
-        $this->id = Uuid::v4();
-        $this->name = $name;
-        $this->description = $description;
-        $this->slug = $slug;
-
-        $this->initTimestamps();
-    }
-
-    public function update(string $name, string $description, string $slug): void
+    public function __construct(string $name, string $description)
     {
         $this->name = $name;
         $this->description = $description;
-        $this->slug = $slug;
-
-        $this->updatedAt = new DateTime;
     }
 
-    public function getId(): Uuid
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,13 +33,28 @@ class Project
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }

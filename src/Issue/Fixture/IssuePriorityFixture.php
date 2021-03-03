@@ -5,20 +5,11 @@ declare(strict_types=1);
 namespace App\Issue\Fixture;
 
 use App\Issue\Message\CreateIssuePriority;
-use App\Issue\Model\IssuePriority;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Shared\Fixture\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Messenger\MessageBusInterface;
 
-class IssuePriorityFixture extends Fixture
+class IssuePriorityFixture extends AbstractFixture
 {
-    private MessageBusInterface $messageBus;
-
-    public function __construct(MessageBusInterface $messageBus)
-    {
-        $this->messageBus = $messageBus;
-    }
-
     public function load(ObjectManager $manager): void
     {
         $priorities = [
@@ -36,7 +27,7 @@ class IssuePriorityFixture extends Fixture
                 icon: $icon,
             );
 
-            $this->messageBus->dispatch($message);
+            $this->dispatchMessage($message);
         }
 
         $manager->flush();

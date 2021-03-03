@@ -19,7 +19,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class IssueFixture extends AbstractFixture implements DependentFixtureInterface
 {
-    private MessageBusInterface $messageBus;
     private ProjectRepositoryInterface $projectRepository;
     private IssuePriorityRepositoryInterface $issuePriorityRepository;
     private IssueStatusRepositoryInterface $issueStatusRepository;
@@ -30,9 +29,8 @@ class IssueFixture extends AbstractFixture implements DependentFixtureInterface
         IssuePriorityRepositoryInterface $issuePriorityRepository,
         IssueStatusRepositoryInterface $issueStatusRepository,
     ) {
-        parent::__construct();
+        parent::__construct($messageBus);
 
-        $this->messageBus = $messageBus;
         $this->projectRepository = $projectRepository;
         $this->issuePriorityRepository = $issuePriorityRepository;
         $this->issueStatusRepository = $issueStatusRepository;
@@ -55,7 +53,7 @@ class IssueFixture extends AbstractFixture implements DependentFixtureInterface
                         statusId: $status->getId()
                     );
 
-                    $this->messageBus->dispatch($message);
+                    $this->dispatchMessage($message);
                 }
             }
         }

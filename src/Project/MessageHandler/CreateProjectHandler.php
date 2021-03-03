@@ -23,12 +23,9 @@ class CreateProjectHandler implements MessageHandlerInterface
 
     public function __invoke(CreateProject $command): void
     {
-        $slug = $this->slugGenerator->generate($command->getName());
-
         $project = new Project(
             name: $command->getName(),
             description: $command->getDescription(),
-            slug: $slug,
         );
 
         $this->projectRepository->add($project);

@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace App\Issue\Repository\Doctrine;
 
-use App\Issue\Collection\IssueCollection;
 use App\Issue\Collection\IssuePriorityCollection;
-use App\Issue\Model\Issue;
 use App\Issue\Model\IssuePriority;
 use App\Issue\Repository\IssuePriorityRepositoryInterface;
-use App\Issue\Repository\IssueRepositoryInterface;
 use App\Shared\Exception\ModelNotFoundException;
 use App\Shared\Repository\AbstractDoctrineRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Symfony\Component\Uid\Uuid;
 
 class IssuePriorityDoctrineRepository extends AbstractDoctrineRepository implements IssuePriorityRepositoryInterface
 {
@@ -24,17 +19,17 @@ class IssuePriorityDoctrineRepository extends AbstractDoctrineRepository impleme
     }
 
     /**
-     * @param  Uuid $issuePriorityId
+     * @param  int $issuePriorityId
      *
      * @return IssuePriority
      * @throws ModelNotFoundException
      * @throws NonUniqueResultException
      */
-    public function get(Uuid $issuePriorityId): IssuePriority
+    public function get(int $issuePriorityId): IssuePriority
     {
         $issuePriority = $this->createQueryBuilder('issue_priority')
             ->where('issue_priority.id = :id')
-            ->setParameter('id', $issuePriorityId->toBinary())
+            ->setParameter('id', $issuePriorityId)
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -53,23 +48,5 @@ class IssuePriorityDoctrineRepository extends AbstractDoctrineRepository impleme
             ->getResult();
 
         return new IssuePriorityCollection($issuePriorities);
-    }
-
-    public function add(IssuePriority $issuePriority): void
-    {
-        $this->entityManager->persist($issuePriority);
-        $this->entityManager->flush();
-    }
-
-    public function getLatestPosition(): int
-    {
-        try {
-            return (int) $this->createQueryBuilder('issue_priority')
-                ->select('MAX(issue_priority.position)')
-                ->getQuery()
-                ->getSingleScalarResult();
-        } catch (NoResultException) {
-            return 0;
-        }
     }
 }
